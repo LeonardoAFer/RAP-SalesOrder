@@ -1,0 +1,34 @@
+@Metadata.layer: #CORE
+annotate entity ZC_SALESHDR10 with
+{
+  @UI.hidden: true
+  Uuid;
+  @UI.lineItem: [{ position:10 }]
+  SalesOrder;
+  @UI.lineItem: [{ position:20 }]
+  SalesOderType;
+  @UI.lineItem: [{ position:30 }]
+  Description;
+  @UI.lineItem: [{ position:40 }]
+  SalesOrganization;
+  @UI.lineItem: [{ position:50 }]
+  SoldToParty;
+  @UI.lineItem: [{ position:60 }]
+  DistributionChannel;
+  @UI.lineItem: [{ position:70 }]
+  DocumentReason;
+  @UI.lineItem: [{ position:80 }]
+  TotalNetAmount;
+  @UI.lineItem: [{ position:90 }]
+  TransactionCurrency;
+  @UI.hidden: true
+  CreatedByUser;
+  @UI.hidden: true
+  CreatedAt;
+  @UI.hidden: true
+  ChangedAt;
+  @UI.hidden: true
+  LastChangedByUser;
+  @UI.hidden: true
+  LocalChangedAt;
+}
