@@ -1,16 +1,18 @@
 managed implementation in class zbp_i_saleshdr10 unique;
+with draft;
 //strict ( 2 );
 
 define behavior for ZI_SALESHDR10 alias SalesHdr
 persistent table zsaleshdr10
-lock master
+draft table zdsaleshdr10
+lock master total etag ChangedAt
 //authorization master ( instance )
 etag master LocalChangedAt
 {
   create;
   update;
   delete;
-  association _SalesItem { create; }
+  association _SalesItem { create; with draft; }
   field ( numbering : managed, readonly ) Uuid;
 
   mapping for zsaleshdr10
@@ -35,6 +37,7 @@ etag master LocalChangedAt
 
 define behavior for ZI_SALESITEM10 alias SalesItem
 persistent table zsalesitem10
+draft table zdsalesitem10
 lock dependent by _SalesHdr
 //authorization dependent by _SalesHdr
 etag master LocalChangedAt
@@ -42,7 +45,7 @@ etag master LocalChangedAt
   update;
   delete;
   field ( readonly ) Salesorderuuid;
-  association _SalesHdr;
+  association _SalesHdr { with draft; }
   field ( numbering : managed, readonly ) Uuid;
 
   mapping for zsalesitem10

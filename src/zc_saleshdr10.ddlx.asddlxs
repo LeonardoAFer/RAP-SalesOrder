@@ -18,6 +18,7 @@ annotate entity ZC_SALESHDR10 with
   @UI.hidden: true
   Uuid;
   @UI.lineItem: [{ position:10 }]
+  @UI.identification: [{ position: 5 }]
   SalesOrder;
   @UI.lineItem: [{ position:20 }]
   @UI.identification: [{ position: 10 }]
