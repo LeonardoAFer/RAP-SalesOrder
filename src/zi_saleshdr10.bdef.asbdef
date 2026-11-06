@@ -1,0 +1,67 @@
+managed implementation in class zbp_i_saleshdr10 unique;
+//strict ( 2 );
+
+define behavior for ZI_SALESHDR10 alias SalesHdr
+persistent table zsaleshdr10
+lock master
+//authorization master ( instance )
+etag master LocalChangedAt
+{
+  create;
+  update;
+  delete;
+  association _SalesItem { create; }
+  field ( numbering : managed, readonly ) Uuid;
+
+  mapping for zsaleshdr10
+    {
+      Uuid                = uuid;
+      SalesOrder          = sales_order;
+      SalesOderType       = sales_oder_type;
+      Description         = description;
+      SalesOrganization   = sales_organization;
+      SoldToParty         = sold_to_party;
+      DistributionChannel = distribution_channel;
+      DocumentReason      = document_reason;
+      TotalNetAmount      = total_net_amount;
+      TransactionCurrency = transaction_currency;
+      CreatedByUser       = created_by_user;
+      CreatedAt           = created_at;
+      ChangedAt           = changed_at;
+      LastChangedByUser   = last_changed_by_user;
+      LocalChangedAt      = local_changed_at;
+    }
+}
+
+define behavior for ZI_SALESITEM10 alias SalesItem
+persistent table zsalesitem10
+lock dependent by _SalesHdr
+//authorization dependent by _SalesHdr
+etag master LocalChangedAt
+{
+  update;
+  delete;
+  field ( readonly ) Salesorderuuid;
+  association _SalesHdr;
+  field ( numbering : managed, readonly ) Uuid;
+
+  mapping for zsalesitem10
+    {
+      Uuid                = uuid;
+      Salesorderuuid      = salesorderuuid;
+      Item                = item;
+      ItemCategory        = item_category;
+      ItemText            = item_text;
+      Material            = material;
+      Plant               = plant;
+      OrderQuantity       = order_quantity;
+      OrderQuantityUnit   = order_quantity_unit;
+      Netamount           = netamount;
+      TransactionCurrency = transaction_currency;
+      CreatedByUser       = created_by_user;
+      CreatedAt           = creation_at;
+      ChangedAt           = changed_at;
+      LastChangedByUser   = last_changed_by_user;
+      LocalChangedAt      = local_changed_at;
+    }
+}
