@@ -14,9 +14,11 @@ etag master LocalChangedAt
   delete;
   association _SalesItem { create; with draft; }
   field ( numbering : managed, readonly ) Uuid;
-  field ( readonly ) SalesOrder;
+  field ( readonly ) SalesOrder, Status;
 
   determination calcSalesOrderId on save { create; }
+
+  action ( features : instance ) setComplete result[1] $self;
 
   mapping for zsaleshdr10
     {
@@ -30,6 +32,7 @@ etag master LocalChangedAt
       DocumentReason      = document_reason;
       TotalNetAmount      = total_net_amount;
       TransactionCurrency = transaction_currency;
+      Status              = status;
       CreatedByUser       = created_by_user;
       CreatedAt           = created_at;
       ChangedAt           = changed_at;

@@ -16,6 +16,7 @@ define root view entity ZI_SALESHDR10
       @Semantics.amount.currencyCode: 'TransactionCurrency'
       total_net_amount     as TotalNetAmount,
       transaction_currency as TransactionCurrency,
+      status               as Status,
       @Semantics.user.createdBy: true
       created_by_user      as CreatedByUser,
       @Semantics.systemDateTime.createdAt: true

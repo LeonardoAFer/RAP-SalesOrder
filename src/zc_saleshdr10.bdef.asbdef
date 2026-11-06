@@ -9,6 +9,8 @@ use etag
   use update;
   use delete;
 
+  use action setComplete;
+
   use association _SalesItem { create; with draft; }
 }
 

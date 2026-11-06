@@ -48,6 +48,8 @@ CLASS lhc_SalesHdr DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys REQUEST requested_features FOR SalesHdr RESULT result.
     METHODS calcsalesorderid FOR DETERMINE ON SAVE
       IMPORTING keys FOR saleshdr~calcsalesorderid.
+    METHODS setcomplete FOR MODIFY
+      IMPORTING keys FOR ACTION saleshdr~setcomplete RESULT result.
 
 ENDCLASS.
 
@@ -82,6 +84,33 @@ CLASS lhc_SalesHdr IMPLEMENTATION.
 
 
     ENDIF.
+
+  ENDMETHOD.
+
+  METHOD setComplete.
+
+    MODIFY ENTITIES OF zi_saleshdr10 IN LOCAL MODE
+            ENTITY SalesHdr
+            UPDATE
+            FIELDS ( Status )
+            WITH VALUE #(
+                FOR key IN keys (
+                    %tky = key-%tky
+                    status = 'C'
+                )
+             ).
+
+    READ ENTITIES OF zi_saleshdr10 IN LOCAL MODE
+     ENTITY SalesHdr
+     ALL FIELDS WITH CORRESPONDING #( keys )
+     RESULT DATA(Sales).
+
+    result = VALUE #(
+      FOR sale IN Sales (
+          %tky = Sale-%tky
+          %param  = Sale
+       )
+     ).
 
   ENDMETHOD.
 

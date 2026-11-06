@@ -18,6 +18,7 @@ define root view entity ZC_SALESHDR10 as projection on ZI_SALESHDR10 as SalesHdr
     @Semantics.amount.currencyCode: 'TransactionCurrency'
     TotalNetAmount,
     TransactionCurrency,
+    Status,
     CreatedByUser,
     CreatedAt,
     ChangedAt,
