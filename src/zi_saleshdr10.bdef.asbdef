@@ -51,6 +51,8 @@ etag master LocalChangedAt
   association _SalesHdr { with draft; }
   field ( numbering : managed, readonly ) Uuid;
 
+  validation validatePlan on save { field Plant; create; update; }
+
   mapping for zsalesitem10
     {
       Uuid                = uuid;

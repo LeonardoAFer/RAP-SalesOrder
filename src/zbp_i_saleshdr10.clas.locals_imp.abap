@@ -1,3 +1,46 @@
+CLASS lhc_salesitem DEFINITION INHERITING FROM cl_abap_behavior_handler.
+
+  PRIVATE SECTION.
+
+    METHODS validatePlan FOR VALIDATE ON SAVE
+      IMPORTING keys FOR SalesItem~validatePlan.
+
+ENDCLASS.
+
+CLASS lhc_salesitem IMPLEMENTATION.
+
+  METHOD validatePlan.
+
+    READ ENTITIES OF zi_saleshdr10 IN LOCAL MODE
+    ENTITY SalesItem
+    FIELDS ( Plant ) WITH CORRESPONDING #( keys )
+    RESULT DATA(SalesItems).
+
+    SELECT FROM t001w WITH PRIVILEGED ACCESS
+        FIELDS werks
+        FOR ALL ENTRIES IN @SalesItems
+        WHERE werks = @SalesItems-plant
+        INTO TABLE @DATA(plants).
+
+
+    LOOP AT salesitems INTO DATA(SalesItem).
+      READ TABLE plants WITH KEY werks = salesitem-plant
+          TRANSPORTING NO FIELDS.
+      IF sy-subrc <> 0.
+        APPEND VALUE #( %tky = salesitem-%tky ) TO failed-salesitem.
+        APPEND VALUE #( %tky = salesitem-%tky
+                        %msg = new_message_with_text(
+                        severity = if_abap_behv_message=>severity-error
+                        text = 'Plant does not exist'
+                         ) )
+                         TO reported-salesitem.
+      ENDIF.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+ENDCLASS.
+
 CLASS lhc_SalesHdr DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
 
