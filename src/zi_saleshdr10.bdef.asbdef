@@ -14,6 +14,9 @@ etag master LocalChangedAt
   delete;
   association _SalesItem { create; with draft; }
   field ( numbering : managed, readonly ) Uuid;
+  field ( readonly ) SalesOrder;
+
+  determination calcSalesOrderId on save { create; }
 
   mapping for zsaleshdr10
     {
