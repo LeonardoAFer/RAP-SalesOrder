@@ -1,17 +1,35 @@
 @Metadata.layer: #CORE
+@UI: { headerInfo: { typeNamePlural: 'Sales Order',
+                      title: { type:#STANDARD, value: 'Salesorder' } } }
 annotate entity ZC_SALESHDR10 with
 {
+  @UI.facet: [{ id: 'SalesOrder',
+  purpose: #STANDARD,
+  label: 'Sales Order',
+  type: #IDENTIFICATION_REFERENCE,
+  position: 10 },
+  { id: 'SalesOrderItem',
+  purpose: #STANDARD,
+  label: 'Sales Order Items',
+  type: #LINEITEM_REFERENCE,
+  position: 10,
+  targetElement: '_SalesItem' }]
+
   @UI.hidden: true
   Uuid;
   @UI.lineItem: [{ position:10 }]
   SalesOrder;
   @UI.lineItem: [{ position:20 }]
+  @UI.identification: [{ position: 10 }]
   SalesOderType;
   @UI.lineItem: [{ position:30 }]
+  @UI.identification: [{ position: 20 }]
   Description;
   @UI.lineItem: [{ position:40 }]
+  @UI.identification: [{ position: 40 }]
   SalesOrganization;
   @UI.lineItem: [{ position:50 }]
+  @UI.identification: [{ position: 30 }]
   SoldToParty;
   @UI.lineItem: [{ position:60 }]
   DistributionChannel;
